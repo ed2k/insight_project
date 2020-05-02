@@ -6,8 +6,6 @@
 gcloud_keys/
 layers/
 __pycache__/
-tfjs2/
-my_model.h5
 zoom_premium/.cache/
 zoom_premium/.ipynb_checkpoints/
 

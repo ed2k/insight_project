@@ -95,6 +95,8 @@ class EGDataset(DownloadEG):
 				is_img_valid = self.validate_img(img)
 				if is_img_valid:
 					dict_img[img_fname] = img_p
+				else:
+					print(f'{img_p} invalid')
 			except:
 				pass
 		return dict_img
@@ -108,16 +110,21 @@ class EGDataset(DownloadEG):
 							val: mask_filename is the status of the mask 1=valid, 0=not valid
 		"""
 		path_mats = self.data_path
-		path_mats = path_mats +"/"+ self.masks_folder +"/*.mat"
+		#path_mats = path_mats +"/"+ self.masks_folder +"/*.mat"
+		path_mats = path_mats +"/"+ self.masks_folder +"/*.ppm"
+		print(path_mats)
 		dict_mats = dict()
 		for i, mat_p in enumerate(glob(path_mats)):
+			print(mat_p)
 			try:
-				mat = loadmat( mat_p )
+				#mat = loadmat( mat_p )
+				#mat = cv2.imread(mat_p)
 				img_fname = mat_p.split("/")[-1]
-				img_fname = img_fname.replace("_mask.mat", ".jpg")
-				mask_arr = mat["mask"] #uint8 format 0 to 1
-				if self.validate_img(mask_arr * 255.):
-					dict_mats[img_fname] = mat_p
+				#img_fname = img_fname.replace("_mask.mat", ".jpg")
+				img_fname = img_fname.replace(".ppm", ".jpg")
+				#mask_arr = mat["mask"] #uint8 format 0 to 1
+				#if self.validate_img(mask_arr * 255.):
+				dict_mats[img_fname] = mat_p
 			except:
 				pass
 		return dict_mats
@@ -134,6 +141,7 @@ class EGDataset(DownloadEG):
 			dict_crops_specs = self.read_crop_txt()
 			dict_images = self.read_images_folder()
 			dict_masks = self.read_masks_folder()
+			print(len(dict_images), dict_masks)
 			for img_fname in dict_images.keys():
 				try:
 					this_example = dict()
@@ -149,4 +157,7 @@ class EGDataset(DownloadEG):
 			#save dataset as pickle
 			with open("eg_dataset.pickle", "wb") as handle:
 				pickle.dump(self.dataset, handle, protocol=pickle.HIGHEST_PROTOCOL)
-				print("EG dataset saved in `eg_dataset.pickle`.")
+				print(f"EG dataset size {len(self.dataset)} saved in `eg_dataset.pickle`.")
+
+if __name__ == "__main__":
+	EGDataset().build_dataset()
