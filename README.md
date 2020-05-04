@@ -20,6 +20,14 @@ Dependencies: `utils/rawdata_prep.py` and `utils/downloader.py`
 The jupyter notebook performs the following task:
 
 	1. Download of the Flickr Portrait Dataset from Dropbox (zip file): includes masks (mat files) and image crop info (in text file)
+	mat files not there anymore, use lfw data set directly
+	https://www.dropbox.com/s/kkj73eklp5fnut0/data.zip?dl=0
+	 mkdir -p [EG_code_data]_release/data
+	 cp ~/Downloads/data.zip dataset_EG.zip
+	 run the download script to unzip
+	 mv raw/images \[EG_code_data\]_release/data/.
+     mv raw/masks \[EG_code_data\]_release/data/image_masks
+	 PYTHONPATH=. python utils/rawdata_prep.py
 
 	2. Unzip file
 
