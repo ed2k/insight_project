@@ -29,6 +29,10 @@ The jupyter notebook performs the following task:
      mv raw/masks \[EG_code_data\]_release/data/image_masks
 	 PYTHONPATH=. python utils/rawdata_prep.py
 
+	 docker run -p 8888:8888 -v /home/a/insight_project:/home/a --rm --gpus all -it tensorflow/tensorflow:latest-gpu-jupyter
+	 docker exec -it <id> /bin/bash
+
+
 	2. Unzip file
 
 	3. Download the online images
